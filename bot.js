@@ -130,18 +130,32 @@ async function getNFTBalance(channel_id,ownerAddress) {
             }
           }
         } catch (axiosError) {
+          
           let name= "No name,this metadata doesn't follow the standard";
           let description="No description,this metadata doesn't follow the standard";
           let image = "https://ipfs.io/ipfs/bafkreigbzfovprwjdzhvbfmh3n5j4nidaqi455bvomy4kpg2jjvi6b4geq";
           embeds.push({
             title: name,
             description: description,
-            image:{url:image.toString()}
+            image:{url:image}
           });
 
         }
     }
-   
+    if(balance==0)
+    {
+      const messageData = {
+        content: 'Built by irwing@dfhcommunity.com',
+        embeds: [
+          {
+            title:'This portfolio has ' + balance + ' NFTs',
+            color: 3683171,
+          }
+        ]
+      };
+      
+      await sendMessage(channel_id, messageData);
+    }
   } catch (error) {
     console.error("Error:", error);
   }
